@@ -1,0 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5; /* Cinza claro para fundo geral */
+}
+
+/* Paleta de cores */
+:root {
+  --primary-blue: #1976d2; /* Azul da sidebar e botões */
+  --secondary-blue: #42a5f5; /* Tom mais claro para hover */
+  --error-red: #d32f2f; /* Vermelho para botões de exclusão */
+  --calendar-purple: #4a148c; /* Roxo para dias destacados */
+  --calendar-green: #388e3c; /* Verde para outros dias */
+  --calendar-red: #d81b60; /* Vermelho para dias específicos */
+  --text-dark: #212121; /* Texto principal */
+  --text-light: #757575; /* Texto secundário */
+}
+
+.sidebar {
+  background-color: var(--primary-blue);
+  color: white;
+  width: 200px;
+  height: 100vh;
+  position: fixed;
+  padding: 20px;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar .MuiListItem-root {
+  color: white;
+}
+
+.sidebar .MuiListItemIcon-root {
+  color: white;
+}
+
+/* Estilo para botões */
+.MuiButton-containedPrimary {
+  background-color: var(--primary-blue);
+}
+
+.MuiButton-containedPrimary:hover {
+  background-color: var(--secondary-blue);
+}
+
+.MuiButton-containedError {
+  background-color: var(--error-red);
+}
+
+/* Estilo para o calendário */
+.calendar-day {
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.calendar-day.highlight {
+  background-color: var(--calendar-purple);
+  color: white;
+}
+
+/* Ajustes gerais */
+.MuiPaper-root {
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.MuiTextField-root {
+  margin: 8px 0;
+}
