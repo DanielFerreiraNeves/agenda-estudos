@@ -1,5 +1,16 @@
 import { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, RadioGroup, FormControlLabel, Radio, Typography } from '@mui/material';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Typography,
+} from '@mui/material';
 
 interface ModalDetalhesProps {
   open: boolean;
@@ -24,12 +35,24 @@ const ModalDetalhes = ({ open, onClose, tarefa }: ModalDetalhesProps) => {
     setEditedTarefa({ ...editedTarefa, tipo: e.target.value as 'Prova' | 'Trabalho' | 'Tarefa' });
   };
 
+  const handleSave = () => {
+    // Lógica para salvar (simulada por agora)
+    console.log('Tarefa editada:', editedTarefa);
+    onClose();
+  };
+
+  const handleDelete = () => {
+    // Lógica para excluir (simulada por agora)
+    console.log('Tarefa excluída:', editedTarefa.id);
+    onClose();
+  };
+
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Detalhes da tarefa</DialogTitle>
+      <DialogTitle>Detalhes da Tarefa</DialogTitle>
       <DialogContent>
         <TextField
-          label="Nome tarefa"
+          label="Nome da Tarefa"
           name="nomeTarefa"
           value={editedTarefa.nomeTarefa}
           onChange={handleChange}
@@ -44,18 +67,27 @@ const ModalDetalhes = ({ open, onClose, tarefa }: ModalDetalhesProps) => {
           fullWidth
           margin="normal"
         />
-        <RadioGroup row value={editedTarefa.tipo} onChange={handleTypeChange} name="tipo">
+        <RadioGroup
+          row
+          value={editedTarefa.tipo}
+          onChange={handleTypeChange}
+          name="tipo"
+        >
           <FormControlLabel value="Prova" control={<Radio />} label="Prova" />
           <FormControlLabel value="Trabalho" control={<Radio />} label="Trabalho" />
           <FormControlLabel value="Tarefa" control={<Radio />} label="Tarefa" />
         </RadioGroup>
         {editedTarefa.professor && (
-          <Typography>Professor(a): {editedTarefa.professor}</Typography>
+          <Typography sx={{ mt: 1 }}>Professor(a): {editedTarefa.professor}</Typography>
         )}
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" color="primary" onClick={onClose}>Editar</Button>
-        <Button variant="contained" color="error" onClick={onClose}>Excluir</Button>
+        <Button variant="contained" color="primary" onClick={handleSave}>
+          Salvar
+        </Button>
+        <Button variant="contained" color="error" onClick={handleDelete}>
+          Excluir
+        </Button>
       </DialogActions>
     </Dialog>
   );

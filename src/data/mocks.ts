@@ -1,4 +1,5 @@
 export const tarefas = [
-  { id: 1, materia: 'Matemática', titulo: 'Áreas e Volumes', prof: 'Carla', imagem: 'https://example.com/math.jpg', data: 'hoje' },
-  // Adicione mais baseados nas imagens
+  { id: 1, materia: 'Matemática', titulo: 'Áreas e Volumes', prof: 'Carla', imagem: 'https://images.pexels.com/photos/6256066/pexels-photo-6256066.jpeg?_gl=1*1pxde8z*_ga*NjE2NjE4NTAyLjE3NTU1NjE1NzI.*_ga_8JE65Q40S6*czE3NTcwMDgwNDYkbzQkZzEkdDE3NTcwMDg3NTQkajU3JGwwJGgw', data: 'hoje' },
+  { id: 2, materia: 'História', titulo: 'Revolução Industrial', prof: 'Pedro', imagem: 'https://images.pexels.com/photos/164268/pexels-photo-164268.jpeg?_gl=1*1xmrps7*_ga*NjE2NjE4NTAyLjE3NTU1NjE1NzI.*_ga_8JE65Q40S6*czE3NTcwMDgwNDYkbzQkZzEkdDE3NTcwMDg5MjYkajUzJGwwJGgw', data: 'amanha' },
+  { id: 3, materia: 'Espanhol', titulo: 'Vocabulário', prof: 'Marcos', imagem: 'https://images.pexels.com/photos/54097/spain-flag-flutter-spanish-54097.jpeg?_gl=1*8w99d9*_ga*NjE2NjE4NTAyLjE3NTU1NjE1NzI.*_ga_8JE65Q40S6*czE3NTcwMDgwNDYkbzQkZzEkdDE3NTcwMDkxMTAkajU0JGwwJGgw', data: 'semana' },
 ];
