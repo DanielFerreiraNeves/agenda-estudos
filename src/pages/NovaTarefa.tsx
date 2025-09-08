@@ -1,46 +1,58 @@
-import Sidebar from '../components/Sidebar';
-import { Box, Button, TextField, RadioGroup, FormControlLabel, Radio, Select, MenuItem, Typography } from '@mui/material';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Sidebar from "../components/Sidebar";
+import {
+  Box,
+  Button,
+  TextField,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Select,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NovaTarefa = () => {
   const navigate = useNavigate();
   const [tarefa, setTarefa] = useState({
-    titulo: '',
-    materia: '',
-    tipo: 'Tarefa' as const,
-    dataEntrega: '',
-    prioridade: 'Média' as const,
-    observacoes: '',
+    titulo: "",
+    materia: "",
+    tipo: "Tarefa" as const,
+    dataEntrega: "",
+    prioridade: "Média" as const,
+    observacoes: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>
+  ) => {
     const { name, value } = e.target as any;
-    setTarefa({ ...tarefa, [name || '']: value });
+    setTarefa({ ...tarefa, [name || ""]: value });
   };
 
   const handleSave = () => {
     // Simulação de salvamento (pode integrar com um estado global ou API depois)
-    console.log('Nova tarefa criada:', tarefa);
+    console.log("Nova tarefa criada:", tarefa);
     // Adicione lógica para adicionar ao array de tarefas, se desejar
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+    <Box sx={{ display: "flex", minHeight: "100vh" }}>
       <Sidebar />
-      <Box sx={{ flexGrow: 1, marginLeft: '200px', padding: 4 }}>
-        <Typography variant="h4" sx={{ color: 'var(--text-dark)', mb: 3 }}>
+      <Box sx={{ flexGrow: 1, marginLeft: "200px", padding: 4 }}>
+        <Typography variant="h4" sx={{ color: "var(--text-dark)", mb: 3 }}>
           Nova Tarefa
         </Typography>
         <Box
           component="form"
           sx={{
-            maxWidth: '500px', // Ajuste conforme o protótipo (pode ser 400px ou outro valor)
-            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            maxWidth: "500px", // Ajuste conforme o protótipo (pode ser 400px ou outro valor)
+            backgroundColor: "rgba(255, 255, 255, 0.95)",
             padding: 3,
             borderRadius: 2,
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
           }}
         >
           <TextField
@@ -60,7 +72,9 @@ const NovaTarefa = () => {
             fullWidth
             margin="normal"
             displayEmpty
-            renderValue={(selected) => (selected ? selected : 'Selecione uma matéria')}
+            renderValue={(selected) =>
+              selected ? selected : "Selecione uma matéria"
+            }
           >
             <MenuItem value="" disabled>
               Selecione uma matéria
@@ -78,8 +92,16 @@ const NovaTarefa = () => {
             sx={{ mb: 2, mt: 1 }}
           >
             <FormControlLabel value="Prova" control={<Radio />} label="Prova" />
-            <FormControlLabel value="Trabalho" control={<Radio />} label="Trabalho" />
-            <FormControlLabel value="Tarefa" control={<Radio />} label="Tarefa" />
+            <FormControlLabel
+              value="Trabalho"
+              control={<Radio />}
+              label="Trabalho"
+            />
+            <FormControlLabel
+              value="Tarefa"
+              control={<Radio />}
+              label="Tarefa"
+            />
           </RadioGroup>
           <TextField
             label="Data de Entrega"
