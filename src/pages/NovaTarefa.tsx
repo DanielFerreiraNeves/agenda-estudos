@@ -1,151 +1,162 @@
-import Sidebar from "../components/Sidebar";
+// src/pages/NovaTarefa.tsx
 import {
   Box,
   Button,
   TextField,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Select,
-  MenuItem,
   Typography,
+  MenuItem,
+  Paper,
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../services/api";
+import type { DataCategoria } from "../services/api";
+
+import Sidebar from "../components/Sidebar";
 
 const NovaTarefa = () => {
   const navigate = useNavigate();
-  const [tarefa, setTarefa] = useState({
+  const username =
+    JSON.parse(localStorage.getItem("user") || "{}").username || "Aluno";
+
+  const [form, setForm] = useState({
     titulo: "",
     materia: "",
-    tipo: "Tarefa" as const,
-    dataEntrega: "",
-    prioridade: "Média" as const,
-    observacoes: "",
+    prof: "",
+    imagem: "",
+    tipo: "Tarefa",
+    data: "semana" as DataCategoria,
   });
+  const [salvando, setSalvando] = useState(false);
+  const [erro, setErro] = useState("");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target as any;
-    setTarefa({ ...tarefa, [name || ""]: value });
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
   };
 
-  const handleSave = () => {
-    // Simulação de salvamento (pode integrar com um estado global ou API depois)
-    console.log("Nova tarefa criada:", tarefa);
-    // Adicione lógica para adicionar ao array de tarefas, se desejar
-    navigate("/dashboard");
+  const handleSubmit = async () => {
+    setErro("");
+    if (!form.titulo || !form.materia) {
+      setErro("Preencha pelo menos Título e Matéria.");
+      return;
+    }
+    try {
+      setSalvando(true);
+      await api.createTarefa({
+        ...form,
+        username,
+      });
+      navigate("/dashboard", { replace: true });
+    } catch (e: any) {
+      setErro(e?.message || "Erro ao criar tarefa.");
+    } finally {
+      setSalvando(false);
+    }
   };
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
       <Sidebar />
-      <Box sx={{ flexGrow: 1, marginLeft: "200px", padding: 4 }}>
-        <Typography variant="h4" sx={{ color: "var(--text-dark)", mb: 3 }}>
+      <Box sx={{ flexGrow: 1, marginLeft: "200px", p: 4 }}>
+        <Typography variant="h4" sx={{ color: "var(--text-dark)", mb: 2 }}>
           Nova Tarefa
         </Typography>
-        <Box
-          component="form"
-          sx={{
-            maxWidth: "500px", // Ajuste conforme o protótipo (pode ser 400px ou outro valor)
-            backgroundColor: "rgba(255, 255, 255, 0.95)",
-            padding: 3,
-            borderRadius: 2,
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-          }}
-        >
+        <Typography sx={{ color: "var(--text-light)", mb: 3 }}>
+          Preencha os dados abaixo para cadastrar uma nova tarefa.
+        </Typography>
+
+        <Paper sx={{ p: 3, maxWidth: 640 }}>
           <TextField
             label="Título"
             name="titulo"
-            value={tarefa.titulo}
+            value={form.titulo}
             onChange={handleChange}
             fullWidth
             margin="normal"
             required
           />
-          <Select
+          <TextField
             label="Matéria"
             name="materia"
-            value={tarefa.materia}
+            value={form.materia}
             onChange={handleChange}
             fullWidth
             margin="normal"
-            displayEmpty
-            renderValue={(selected) =>
-              selected ? selected : "Selecione uma matéria"
-            }
-          >
-            <MenuItem value="" disabled>
-              Selecione uma matéria
-            </MenuItem>
-            <MenuItem value="Matemática">Matemática</MenuItem>
-            <MenuItem value="História">História</MenuItem>
-            <MenuItem value="Física">Física</MenuItem>
-            <MenuItem value="Química">Química</MenuItem>
-          </Select>
-          <RadioGroup
-            row
-            name="tipo"
-            value={tarefa.tipo}
-            onChange={handleChange}
-            sx={{ mb: 2, mt: 1 }}
-          >
-            <FormControlLabel value="Prova" control={<Radio />} label="Prova" />
-            <FormControlLabel
-              value="Trabalho"
-              control={<Radio />}
-              label="Trabalho"
-            />
-            <FormControlLabel
-              value="Tarefa"
-              control={<Radio />}
-              label="Tarefa"
-            />
-          </RadioGroup>
-          <TextField
-            label="Data de Entrega"
-            name="dataEntrega"
-            value={tarefa.dataEntrega}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            type="date"
-            InputLabelProps={{ shrink: true }}
             required
           />
-          <RadioGroup
-            row
-            name="prioridade"
-            value={tarefa.prioridade}
-            onChange={handleChange}
-            sx={{ mb: 2, mt: 1 }}
-          >
-            <FormControlLabel value="Baixa" control={<Radio />} label="Baixa" />
-            <FormControlLabel value="Média" control={<Radio />} label="Média" />
-            <FormControlLabel value="Alta" control={<Radio />} label="Alta" />
-          </RadioGroup>
           <TextField
-            label="Observações"
-            name="observacoes"
-            value={tarefa.observacoes}
+            label="Professor (opcional)"
+            name="prof"
+            value={form.prof}
             onChange={handleChange}
             fullWidth
             margin="normal"
-            multiline
-            rows={3}
-            placeholder="Adicione notas ou detalhes..."
           />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSave}
+          <TextField
+            label="URL da Imagem (opcional)"
+            name="imagem"
+            value={form.imagem}
+            onChange={handleChange}
             fullWidth
-            sx={{ mt: 3, py: 1.5 }} // Ajuste de padding vertical para botão maior, se no protótipo
+            margin="normal"
+          />
+          <TextField
+            label="Tipo"
+            name="tipo"
+            value={form.tipo}
+            onChange={handleChange}
+            select
+            fullWidth
+            margin="normal"
           >
-            Salvar Tarefa
-          </Button>
-        </Box>
+            <MenuItem value="Tarefa">Tarefa</MenuItem>
+            <MenuItem value="Prova">Prova</MenuItem>
+            <MenuItem value="Trabalho">Trabalho</MenuItem>
+          </TextField>
+
+          <TextField
+            label="Quando"
+            name="data"
+            value={form.data}
+            onChange={handleChange}
+            select
+            fullWidth
+            margin="normal"
+            helperText="Categoria usada no Dashboard"
+          >
+            <MenuItem value="hoje">Hoje</MenuItem>
+            <MenuItem value="amanha">Amanhã</MenuItem>
+            <MenuItem value="semana">Essa Semana</MenuItem>
+          </TextField>
+
+          {erro && (
+            <Typography color="error" sx={{ mt: 1 }}>
+              {erro}
+            </Typography>
+          )}
+
+          <Box sx={{ display: "flex", gap: 2, mt: 3 }}>
+            <Button
+              variant="outlined"
+              color="inherit"
+              onClick={() => navigate("/dashboard")}
+              disabled={salvando}
+            >
+              Voltar
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              disabled={salvando}
+            >
+              {salvando ? "Salvando..." : "Salvar"}
+            </Button>
+          </Box>
+        </Paper>
       </Box>
     </Box>
   );

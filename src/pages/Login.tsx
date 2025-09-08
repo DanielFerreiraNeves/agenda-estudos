@@ -26,8 +26,8 @@ const Login = () => {
         return;
       }
 
-      localStorage.setItem("user", JSON.stringify(data)); // salva usuário logado
-      navigate("/dashboard");
+      localStorage.setItem("user", JSON.stringify({ username: form.username }));
+      navigate("/dashboard", { replace: true });
     } catch (err) {
       setError("Erro de conexão com servidor.");
     }

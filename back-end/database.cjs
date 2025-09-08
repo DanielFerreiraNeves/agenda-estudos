@@ -3,6 +3,7 @@
 const db = {
   users: [],
   posts: [],
+  tarefas: [],
 };
 
 module.exports = db;
