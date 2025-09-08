@@ -1,0 +1,10 @@
+guia para a instalação do projeto
+
+com a pasta de arquivos aberta, temos que abrir o terminal dentro da pasta agenda-estudos
+tendo o node instalado, rode o comando npm run dev (pode ser que sejam necessarias atualizações adicionais que serão indicadas no console)
+em seguida entre na pasta back-end e abra o terminal dentro dela
+No terminal é necessario rodar o comando node server.cjs (denovo, esse processo pode requerir algumas atualizações de funções para funcionar)
+
+em seguida abra no navegador o local indicado no terminal http://localhost:XXXX/ 
+
+a aplicação vai abrir no navegador, basta apenas criar uma conta e fazer login
